@@ -59,7 +59,6 @@ Route::prefix('restore')->group(function () {
     Route::post('/{hash}', [RestoreController::class, 'onChangePassword']);
 });
 
-
 Route::get('activate/{userId}/{hash}', [LoginController::class, 'onActivateAccount'])->name('activate');
 Route::get('refresh-captcha', [CaptchaController::class, 'refreshCaptcha'])->name('refreshCaptcha');
 
