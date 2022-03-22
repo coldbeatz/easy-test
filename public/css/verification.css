@@ -1,0 +1,7 @@
+@import url("shared.css");
+
+.verification-container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
