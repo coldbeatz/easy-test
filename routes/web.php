@@ -21,11 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return view('lobby');
-    }
-
-    return redirect('login');
+    return Auth::check() ? view('lobby') : redirect('login');
 });
 
 Route::get('/clear', function () {
