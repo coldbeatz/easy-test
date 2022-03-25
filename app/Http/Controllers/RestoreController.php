@@ -7,6 +7,9 @@ use App\Http\Requests\RestoreRequest;
 use App\Mail\AccountRecoveryMail;
 use App\User;
 
+use Exception;
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -15,6 +18,47 @@ class RestoreController extends Controller {
 
     public function index() {
         return view("entrance/restore");
+    }
+
+    public function jsonRestore(RestoreRequest $request):JsonResponse {
+        try {
+            $json = request()->json()->all();
+
+            $email = $json['email'];
+            $captcha = $json['captcha'];
+
+            if (!captcha_check($captcha)) {
+                return $this->jsonError('Captcha key invalid');
+            }
+
+            $user = User::where('email', '=', $email)->first();
+            if ($user == null)
+                return $this->jsonError('Email ' . $email . ' not registered');
+
+            if ($user->email_verified_at == null)
+                return $this->jsonError('Email ' . $email . ' not confirmed. Check your email and confirm your account');
+
+            if ($user->restore_hash == null) {
+                $user->restore_hash = $this->generateUniqueHash();
+                $user->update();
+            }
+
+            $mail = new AccountRecoveryMail($user->name, route('recovery', [
+                'hash' => $user->restore_hash
+            ]));
+
+            Mail::to($user->email)->send($mail);
+
+            return response()->json(['message' => 'Instructions have been sent. Check your email']);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    private function jsonError(string $text):JsonResponse {
+        return response()->json([
+            'error' => $text
+        ]);
     }
 
     public function onRestore(RestoreRequest $request) {
@@ -83,5 +127,4 @@ class RestoreController extends Controller {
             'fail' => $text
         ]);
     }
-
 }

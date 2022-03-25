@@ -7,6 +7,8 @@ use App\User;
 use App\Verification;
 use Carbon\Carbon;
 
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +16,36 @@ class LoginController extends Controller {
 
     public function index() {
         return view("entrance/login");
+    }
+
+    public function jsonLogin(Request $request):JsonResponse {
+        try {
+            $json = request()->json()->all();
+
+            $email = $json['email'];
+            $password = $json['password'];
+
+            $user = User::where('email', '=', $email)->first();
+            if ($user == null)
+                return $this->jsonError('Invalid email');
+
+            if ($user->email_verified_at == null)
+                return $this->jsonError('Email not confirmed');
+
+            if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
+                return response()->json(['remember_token' => Auth::user()->getRememberToken()]);
+            }
+
+            return $this->jsonError('Invalid password');
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    private function jsonError(string $text):JsonResponse {
+        return response()->json([
+            'error' => $text
+        ]);
     }
 
     public function onLogin(Request $request) {

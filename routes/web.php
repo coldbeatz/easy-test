@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RestoreController;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,14 @@ Route::get('migrate', function () {
     Artisan::call('migrate:fresh', ['--force' => true]);
 
     return dd(Artisan::output());
+});
+
+Route::get('/app/auth');
+
+Route::prefix('app')->group(function () {
+    Route::post('auth', [LoginController::class, 'jsonLogin']);
+    Route::post('registration', [RegistrationController::class, 'jsonRegistration']);
+    Route::post('restore', [RestoreController::class, 'jsonRestore']);
 });
 
 Route::middleware('guest')->group(function() {

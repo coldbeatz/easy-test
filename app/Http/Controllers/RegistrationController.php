@@ -6,14 +6,59 @@ use App\Http\Requests\RegistrationRequest;
 use App\Mail\AccountActivateMail;
 use App\User;
 use App\Verification;
+
+use Exception;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Mews\Captcha\Facades\Captcha;
 
 class RegistrationController extends Controller {
 
     public function index() {
         return view("entrance/registration");
+    }
+
+    public function jsonRegistration(Request $request):JsonResponse {
+        try {
+            $json = request()->json()->all();
+
+            $name = $json['name'];
+            $email = $json['email'];
+            $password = $json['password'];
+            $captcha = $json['captcha'];
+
+            if (!captcha_check($captcha)) {
+                return $this->jsonError('Captcha key invalid');
+            }
+
+            $user = new User();
+
+            $user->email = $email;
+            $user->name = $name;
+            $user->setPassword($password);
+            $user->save();
+
+            $verification = $this->createVerification($user->id);
+
+            $mail = new AccountActivateMail($name, route('activate', [
+                'userId' => $user->id,
+                'hash' => $verification->hash
+            ]));
+
+            Mail::to($user->email)->send($mail);
+
+            return response()->json(['message' => 'Confirm your email, the message has been sent to your email']);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    private function jsonError(string $text):JsonResponse {
+        return response()->json([
+            'error' => $text
+        ]);
     }
 
     public function onRegistration(RegistrationRequest $request) {
@@ -55,9 +100,5 @@ class RegistrationController extends Controller {
 
         $verification->save();
         return $verification;
-    }
-
-    public function activateAccount() {
-
     }
 }
