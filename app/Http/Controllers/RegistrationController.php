@@ -16,6 +16,8 @@ use Illuminate\Support\Str;
 
 class RegistrationController extends Controller {
 
+    use ApiController;
+
     public function index() {
         return view("entrance/registration");
     }
@@ -53,12 +55,6 @@ class RegistrationController extends Controller {
         } catch (Exception $e) {
             return $this->jsonError($e->getMessage());
         }
-    }
-
-    private function jsonError(string $text):JsonResponse {
-        return response()->json([
-            'error' => $text
-        ]);
     }
 
     public function onRegistration(RegistrationRequest $request) {

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
 
+    use ApiController;
+
     public function index() {
         return view("entrance/login");
     }
@@ -40,12 +42,6 @@ class LoginController extends Controller {
         } catch (Exception $e) {
             return $this->jsonError($e->getMessage());
         }
-    }
-
-    private function jsonError(string $text):JsonResponse {
-        return response()->json([
-            'error' => $text
-        ]);
     }
 
     public function onLogin(Request $request) {

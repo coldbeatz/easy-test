@@ -19,13 +19,33 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0ffb87e-2384-4e22-a64d-7671e59a315c" name="Default Changelist" comment="test commit">
+    <list default="true" id="f0ffb87e-2384-4e22-a64d-7671e59a315c" name="Default Changelist" comment="entrance app">
+      <change afterPath="$PROJECT_DIR$/app/Data/Question/QuestionType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Testings/QuestionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/left-nav-style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/alerts.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/footer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/header.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/settings.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/testings.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/testings/make.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/testings/question.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/testings/settings.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/easy-test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/easy-test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RestoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RestoreController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/shared.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/shared.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/entrance/registration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/entrance/registration.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/entrance/restore.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/entrance/restore.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/lobby.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/lobby.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,18 +173,22 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Data/Question" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\OpenServer\domains\easy-test\resources\views\mail" />
-      <recent name="E:\OpenServer\domains\easy-test\resources\views\entrance\verification" />
+      <recent name="E:\OpenServer\domains\easy-test\app\Data\Question" />
+      <recent name="E:\OpenServer\domains\easy-test\resources\views" />
+      <recent name="E:\OpenServer\domains\easy-test\app\Http\Controllers" />
       <recent name="E:\OpenServer\domains\easy-test\public\css" />
+      <recent name="E:\OpenServer\domains\easy-test\resources\views\mail" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\OpenServer\domains\easy-test\app\Http\Controllers\Testings" />
+      <recent name="E:\OpenServer\domains\easy-test\app\Http\Controllers" />
       <recent name="E:\OpenServer\domains\easy-test\resources\views\entrance\verification" />
       <recent name="E:\OpenServer\domains\easy-test\resources\views\entrance" />
     </key>
@@ -200,6 +224,23 @@
       <workItem from="1648111036203" duration="14000" />
       <workItem from="1648205130031" duration="3593000" />
       <workItem from="1648225590941" duration="6230000" />
+      <workItem from="1648236727753" duration="338000" />
+      <workItem from="1648303162472" duration="22000" />
+      <workItem from="1648900938915" duration="5757000" />
+      <workItem from="1648908141925" duration="2814000" />
+      <workItem from="1648976420046" duration="20735000" />
+      <workItem from="1649009957737" duration="8598000" />
+      <workItem from="1649271511593" duration="2539000" />
+      <workItem from="1649361835487" duration="26000" />
+      <workItem from="1649362114810" duration="29000" />
+      <workItem from="1649521426839" duration="1116000" />
+      <workItem from="1649863987528" duration="2592000" />
+      <workItem from="1650190744333" duration="147000" />
+      <workItem from="1650990292087" duration="3053000" />
+      <workItem from="1651233829144" duration="1189000" />
+      <workItem from="1651489314888" duration="449000" />
+      <workItem from="1651519337097" duration="2000" />
+      <workItem from="1651568933835" duration="27953000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1647936525354</created>
@@ -222,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647938272433</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="entrance app">
+      <created>1648236765724</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648236765724</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,44 +292,54 @@
     <MESSAGE value="init" />
     <MESSAGE value="test commit" />
     <MESSAGE value="test user commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="test user commit" />
+    <MESSAGE value="entrance app" />
+    <option name="LAST_COMMIT_MESSAGE" value="entrance app" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="677" y="85" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1647898747867">
+    <state x="696" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1649014698509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="677" y="85" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1647898747867" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1648231864380">
+    <state x="696" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1649014698509" />
+    <state x="677" y="85" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1651575731330">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1648231864380" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1647937700633">
+    <state x="677" y="85" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1651575731330" />
+    <state x="677" y="85" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1649015272644" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1651580374678">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1647937700633" />
-    <state x="751" y="243" key="NewPhpClassDialog" timestamp="1647883455997">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1651580374678" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1649016095846" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1648303182375">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="751" y="243" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1647883455997" />
-    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1647899137867">
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1648303182375" />
+    <state x="751" y="243" key="NewPhpClassDialog" timestamp="1649864118454">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="751" y="243" key="NewPhpClassDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1649864118454" />
+    <state x="751" y="243" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1649015320113" />
+    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1651584248234">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1651584248234" />
     <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1647899137867" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1647937814748">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1647937814748" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1647938294666">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1648236774019">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1647938294666" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1648236774019" />
     <state x="761" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1647936672874">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="761" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1647936672874" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1647884139688">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1651590915597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1651590915597" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1647884139688" />
   </component>
 </project>

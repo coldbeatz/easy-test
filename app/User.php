@@ -41,4 +41,8 @@ class User extends Authenticatable
     public function setPassword($password) {
         $this->password = Hash::make($password);
     }
+
+    public function testings() {
+        return $this->hasMany(Testing::class, 'creator_id');
+    }
 }

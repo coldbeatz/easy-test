@@ -43,7 +43,7 @@
         <div class="captcha-container">
             <div style="display: flex; align-items: center">
                 <img src="{{ Captcha::src() }}" id="captcha">
-                <a href="#" id="refreshCaptcha">
+                <a id="refreshCaptcha">
                     <i class="material-icons right" style="font-size: 40px;">rotate_right</i>
                 </a>
             </div>

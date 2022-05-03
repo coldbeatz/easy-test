@@ -1,11 +1,19 @@
 <?php
 
+use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RestoreController;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\SettingsController;
+
+use App\Http\Controllers\Testings\MakeTestingController;
+use App\Http\Controllers\Testings\QuestionController;
+use App\Http\Controllers\Testings\TestingsController;
+use App\Http\Controllers\Testings\TestingSettingsController;
+use App\Http\Controllers\UserRestController;
+
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -39,8 +47,6 @@ Route::get('migrate', function () {
 
     return dd(Artisan::output());
 });
-
-Route::get('/app/auth');
 
 Route::prefix('app')->group(function () {
     Route::post('auth', [LoginController::class, 'jsonLogin']);
@@ -76,5 +82,52 @@ Route::middleware('auth')->group(function() {
         return view('lobby');
     })->name('lobby');
 
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [SettingsController::class, 'index'])
+            ->name('settings');
+
+        Route::post('setName', [SettingsController::class, 'onChangeName'])
+            ->name('setName');
+
+        Route::post('setPassword', [SettingsController::class, 'onChangePassword'])
+            ->name('setPassword');
+    });
+
+    Route::prefix('testings')->group(function () {
+        Route::get('/', [TestingsController::class, 'index'])
+            ->name('testings');
+
+        Route::get('new', [MakeTestingController::class, 'index'])
+            ->name('make-test');
+
+        Route::post('create', [MakeTestingController::class, 'create']);
+
+        Route::get('/{test}', [TestingSettingsController::class, 'index'])
+            ->name('testing');
+
+        Route::post('delete-question', [QuestionController::class, 'onRemoveQuestion'])
+            ->name('delete-question');
+
+        Route::post('/{test}', [TestingSettingsController::class, 'update']);
+
+        Route::post('{test}/question', [QuestionController::class, 'onCreateQuestion']);
+        Route::post('{test}/question/{id}', [QuestionController::class, 'onUpdateQuestion']);
+
+        Route::get('{test}/question', [QuestionController::class, 'index'])
+            ->name('make-question');
+
+        Route::get('{test}/question/{id}', [QuestionController::class, 'index'])
+            ->name('edit-question');
+    });
+
+    Route::post('upload_image', [AvatarUploadController::class, 'upload']);
+
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+    /**
+     * Rest api
+     */
+    Route::prefix('app')->group(function () {
+        Route::get('user', [UserRestController::class, 'parseUserData']);
+    });
 });

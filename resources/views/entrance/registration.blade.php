@@ -61,7 +61,7 @@
         <div class="captcha-container">
             <div style="display: flex; align-items: center">
                 <img src="{{ Captcha::src() }}" id="captcha">
-                <a href="#" id="refreshCaptcha">
+                <a id="refreshCaptcha">
                     <i class="material-icons right" style="font-size: 40px;">rotate_right</i>
                 </a>
             </div>
@@ -72,7 +72,6 @@
                 <label for="captchaCode">Captcha code</label>
             </div>
         </div>
-
 
         <div class="auth_bottom">
             <button class="btn waves-effect waves-light button-auth" type="button" id="button">REGISTRATION
@@ -91,16 +90,14 @@
 
         refreshCaptcha.addEventListener('click', () => {
             fetch('{{ route('refreshCaptcha') }}')
-                .then(
-                    function(response) {
-                        if (response.status === 200) {
-                            response.json().then(function(data) {
-                                captcha.src = data.captcha;
-                            });
-                        }
+                .then(response => {
+                    if (response.status === 200) {
+                        response.json().then(function(data) {
+                            captcha.src = data.captcha;
+                        });
                     }
-                ).catch(function(err) {
-                console.log('Fetch Error:', err);
+                }).catch(function(error) {
+                toast('Error: ' + error);
             });
         });
 
