@@ -11,23 +11,19 @@ class Question extends Model {
     use SoftDeletes;
 
     protected $table = 'questions';
-    protected $dates = ['deleted_at'];
+
+    protected $hidden = [
+        'deleted_at', 'response_type',
+    ];
+
+    protected $dates = [
+        'deleted_at'
+    ];
 
     public $timestamps = false;
 
     public function testing() {
         return $this->belongsTo(Testing::class);
-    }
-
-    public static function createWithData($textQuestion, $json, $testId):Question {
-        $question = new Question();
-
-        $question->question = $textQuestion;
-        $question->json_answers = $json;
-        $question->testing_id = $testId;
-
-        $question->response_type = self::parseResponseType($json);
-        return $question;
     }
 
     public function setData($textQuestion, $json, $testId) {

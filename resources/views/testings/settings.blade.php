@@ -37,6 +37,7 @@
                 <div class="card question">
                     <div class="card-content">
                         <p>{{ $question->question }}</p>
+
                         <div class="answers">
                             @foreach (json_decode($question->json_answers) as $answer)
                                 <div class="answer">

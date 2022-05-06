@@ -112,5 +112,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="croppie" level="application" />
     <orderEntry type="library" name="exif-js" level="application" />
+    <orderEntry type="library" name="default" level="application" />
+    <orderEntry type="library" name="highlight" level="application" />
+    <orderEntry type="library" name="highlight.js" level="application" />
   </component>
 </module>

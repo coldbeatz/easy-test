@@ -11,4 +11,10 @@ trait ApiController {
             'error' => $text
         ]);
     }
+
+    public function jsonMessage(string $text):JsonResponse {
+        return response()->json([
+            'message' => $text
+        ]);
+    }
 }

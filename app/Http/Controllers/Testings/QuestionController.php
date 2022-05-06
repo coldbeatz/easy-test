@@ -8,6 +8,7 @@ use App\Http\Requests\QuestionRequest;
 use App\Question;
 use App\Testing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller {
 
@@ -19,6 +20,9 @@ class QuestionController extends Controller {
 
     public function onCreateQuestion(QuestionRequest $request) {
         $test = Testing::getByRealId($request->test);
+
+        if ($test->creator_id != Auth::id())
+            return back()->withInput()->withErrors(['fail' => 'User is not test creator']);
 
         $question = new Question();
         $question->setData($request->input('question'), $request->input('jsonHidden'), $test->id);
@@ -32,6 +36,9 @@ class QuestionController extends Controller {
     public function onUpdateQuestion(QuestionRequest $request) {
         $test = Testing::getByRealId($request->test);
 
+        if ($test->creator_id != Auth::id())
+            return back()->withInput()->withErrors(['fail' => 'User is not test creator']);
+
         $question = Question::findOrFail($request->id);
 
         $question->setData($request->input('question'), $request->input('jsonHidden'), $test->id);
@@ -44,6 +51,10 @@ class QuestionController extends Controller {
 
     public function onRemoveQuestion(Request $request) {
         $question = Question::findOrFail($request->input('hiddenId'));
+
+        if ($question->testing->creator_id != Auth::id())
+            return back()->withInput()->withErrors(['fail' => 'User is not test creator']);
+
         $question->delete();
 
         return back()

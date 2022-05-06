@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AccountRecoveryMail;
 use App\User;
 
 use App\Verification;
@@ -11,6 +12,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller {
 
@@ -100,5 +102,18 @@ class LoginController extends Controller {
         $request->session()->regenerateToken();
 
         return redirect('login');
+    }
+
+    public function apiLogout(Request $request) {
+        try {
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return $this->jsonMessage('success');
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
     }
 }

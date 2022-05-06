@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiTestingsController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\LoginController;
@@ -14,8 +15,10 @@ use App\Http\Controllers\Testings\TestingsController;
 use App\Http\Controllers\Testings\TestingSettingsController;
 use App\Http\Controllers\UserRestController;
 
+use App\Mail\AccountActivateMail;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,12 +49,6 @@ Route::get('migrate', function () {
     Artisan::call('migrate:fresh', ['--force' => true]);
 
     return dd(Artisan::output());
-});
-
-Route::prefix('app')->group(function () {
-    Route::post('auth', [LoginController::class, 'jsonLogin']);
-    Route::post('registration', [RegistrationController::class, 'jsonRegistration']);
-    Route::post('restore', [RestoreController::class, 'jsonRestore']);
 });
 
 Route::middleware('guest')->group(function() {
@@ -123,11 +120,49 @@ Route::middleware('auth')->group(function() {
     Route::post('upload_image', [AvatarUploadController::class, 'upload']);
 
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('api', function () {
+        return view('api');
+    });
 
     /**
      * Rest api
      */
     Route::prefix('app')->group(function () {
-        Route::get('user', [UserRestController::class, 'parseUserData']);
+        Route::post('user', [UserRestController::class, 'parseUserData']);
+        Route::post('setName', [UserRestController::class, 'setName']);
+        Route::post('changePassword', [UserRestController::class, 'changePassword']);
+        Route::post('uploadImage', [AvatarUploadController::class, 'upload']);
+        Route::post('logout', [LoginController::class, 'apiLogout']);
+
+        Route::prefix('testings')->group(function () {
+            Route::post('all', [ApiTestingsController::class, 'parseAllTestings']);
+            Route::post('new', [ApiTestingsController::class, 'onMakeTesting']);
+            Route::post('get', [ApiTestingsController::class, 'getTestingById']);
+            Route::post('update', [ApiTestingsController::class, 'onUpdateTesting']);
+            Route::post('questions', [ApiTestingsController::class, 'getTestingQuestions']);
+            Route::post('getQuestion', [ApiTestingsController::class, 'getQuestionById']);
+            Route::post('makeQuestion', [ApiTestingsController::class, 'onMakeQuestion']);
+            Route::post('updateQuestion', [ApiTestingsController::class, 'onUpdateQuestion']);
+            Route::post('deleteQuestion', [ApiTestingsController::class, 'onDeleteQuestion']);
+
+            // activate test, removes, statistic
+            // test (+ connect)
+            // results
+        });
     });
+});
+
+/*Route::get('tests', function () {
+    $mail = new AccountActivateMail("vbitmar@mail.ru", route('activate', [
+        'userId' => '$user->id',
+        'hash' => '$verification->hash'
+    ]));
+
+    dd(Mail::to("vbitmar@mail.ru")->send($mail));
+});*/
+
+Route::prefix('app')->group(function () {
+    Route::post('auth', [LoginController::class, 'jsonLogin']);
+    Route::post('registration', [RegistrationController::class, 'jsonRegistration']);
+    Route::post('restore', [RestoreController::class, 'jsonRestore']);
 });
