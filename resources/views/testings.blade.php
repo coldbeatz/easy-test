@@ -4,6 +4,8 @@
 @include('header', ['title' => 'Testings'])
 
 <div class="container">
+    @include('alerts')
+
     <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
         <li class="tab"><a class="active" href="#data">Connection</a></li>
         <li class="tab"><a href="#testings">My testings</a></li>

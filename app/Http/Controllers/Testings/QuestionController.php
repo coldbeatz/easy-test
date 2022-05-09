@@ -7,14 +7,23 @@ use App\Http\Requests\QuestionRequest;
 
 use App\Question;
 use App\Testing;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller {
 
     public function index($realId, $questionId = null) {
+        $question = null;
+        if ($questionId != null) {
+            $question = Question::findOrFail($questionId);
+
+            if ($question->testing->creator_id != Auth::id())
+                return abort(404);
+        }
+
         return view("testings/question", [
-            'question' => $questionId != null ? Question::findOrFail($questionId) : null
+            'question' => $question
         ]);
     }
 

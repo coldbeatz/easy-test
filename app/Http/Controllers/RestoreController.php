@@ -27,11 +27,11 @@ class RestoreController extends Controller {
             $json = request()->json()->all();
 
             $email = $json['email'];
-            $captcha = $json['captcha'];
+            //$captcha = $json['captcha'];
 
-            if (!captcha_check($captcha)) {
-                return $this->jsonError('Captcha key invalid');
-            }
+            //if (!captcha_check($captcha)) {
+            //    return $this->jsonError('Captcha key invalid');
+            //}
 
             $user = User::where('email', '=', $email)->first();
             if ($user == null)

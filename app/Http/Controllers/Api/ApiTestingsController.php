@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\ActiveTest;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
 
 use App\Question;
 use App\Testing;
+
+use DateTimeImmutable;
 use Exception;
 
 use Illuminate\Http\JsonResponse;
@@ -50,7 +53,37 @@ class ApiTestingsController extends Controller {
             $id = $json['id'];
             $test = Testing::find($id);
 
+            if (empty($test))
+                return $this->jsonError("Test is not exists");
+
             return response()->json($test->jsonSerialize());
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function onDeleteTesting(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['id'];
+            $test = Testing::find($id);
+
+            if (empty($test))
+                return $this->jsonError("Test is not exists");
+
+            if ($test->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            foreach ($test->activatedTestings() as $active) {
+                $active->end_time = new DateTimeImmutable();
+
+                $active->update();
+                $active->delete();
+            }
+
+            $test->delete();
+            return $this->jsonMessage('success');
         } catch (Exception $e) {
             return $this->jsonError($e->getMessage());
         }
@@ -65,6 +98,9 @@ class ApiTestingsController extends Controller {
             $description = $json['description'];
 
             $test = Testing::find($id);
+
+            if (empty($test))
+                return $this->jsonError("Test is not exists");
 
             if ($test->creator_id != Auth::id())
                 return $this->jsonError("User is not test creator");
@@ -85,7 +121,13 @@ class ApiTestingsController extends Controller {
             $json = $request->json()->all();
 
             $id = $json['testing_id'];
+
             $test = Testing::find($id);
+            if (empty($test))
+                return $this->jsonError("Test is not exists");
+
+            if ($test->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
 
             $questions = $test->questions->toArray();
             foreach ($questions as $key => $question) {
@@ -103,7 +145,13 @@ class ApiTestingsController extends Controller {
             $json = $request->json()->all();
 
             $id = $json['id'];
+
             $question = Question::find($id);
+            if (empty($question))
+                return $this->jsonError("Question is not exists");
+
+            if ($question->testing->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
 
             $array = $question->toArray();
             $array['json_answers'] = json_decode($array['json_answers']);
@@ -186,4 +234,156 @@ class ApiTestingsController extends Controller {
         }
     }
 
+    public function onActivateTesting(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $datetime = $json['datetime'];
+            $testId = $json['test_id'];
+            $title = $json['title'];
+            $rating = $json['rating'];
+
+            $showUserAnswers = $json['showUserAnswers'];
+            $showCorrectAnswers = $json['showCorrectAnswers'];
+
+            $dateTo = $datetime == null ? null : DateTimeImmutable::createFromFormat('m/d/Y H:i', $datetime);
+
+            $test = Testing::find($testId);
+            if ($test == null)
+                return $this->jsonError("Test not found");
+
+            if ($test->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            $active = new ActiveTest();
+
+            $active->testing_id = $test->id;
+            $active->user_id = Auth::id();
+
+            $active->start_time = new DateTimeImmutable();
+            $active->end_time = $dateTo;
+
+            $active->title = $title;
+            $active->max_rating = $rating;
+            $active->access_code = $active->generateUniqueAccessCode();
+
+            $active->show_user_answers = $showUserAnswers;
+            $active->show_correct_answers = $showCorrectAnswers;
+
+            $active->save();
+
+            return response()->json($active->jsonSerialize());
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function onEditActivate(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $datetime = $json['datetime'];
+            $id = $json['id'];
+            $title = $json['title'];
+            $rating = $json['rating'];
+
+            $showUserAnswers = $json['showUserAnswers'];
+            $showCorrectAnswers = $json['showCorrectAnswers'];
+
+            $dateTo = $datetime == null ? null : DateTimeImmutable::createFromFormat('m/d/Y H:i', $datetime);
+
+            $active = ActiveTest::find($id);
+            if ($active->testing->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            $active->end_time = $dateTo;
+
+            $active->title = $title;
+            $active->max_rating = $rating;
+
+            $active->show_user_answers = $showUserAnswers;
+            $active->show_correct_answers = $showCorrectAnswers;
+
+            $active->update();
+
+            return $this->jsonMessage('success');
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getActivate(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['id'];
+
+            $active = ActiveTest::find($id);
+            if ($active->testing->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            return response()->json($active->jsonSerialize());
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function allActivates(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['test_id'];
+
+            $test = Testing::find($id);
+            if ($test->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            $all = [];
+
+            foreach($test->activatedTestings as $activated) {
+                $all[] = $activated;
+            }
+
+            return response()->json($all);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function onDeleteActivate(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['id'];
+
+            $active = ActiveTest::find($id);
+            if ($active->testing->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            $active->end_time = new DateTimeImmutable();
+
+            $active->update();
+            $active->delete();
+
+            return $this->jsonMessage('success');
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getResults(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['activate_id'];
+
+            $active = ActiveTest::find($id);
+            if ($active->testing->creator_id != Auth::id())
+                return $this->jsonError("User is not test creator");
+
+            return response()->json($active->results()->jsonSerialize());
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
 }

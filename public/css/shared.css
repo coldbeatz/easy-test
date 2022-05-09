@@ -137,3 +137,29 @@ img {
     background-color: #fbfbfb;
     background-image: linear-gradient(to bottom, #ffffff 60%, #f6f6f6 100%);
 }
+
+.result {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.result img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.result_user {
+    display: flex;
+    align-items: center;
+}
+
+.red-button {
+    background-color: #E57373 !important;
+}
+
+#modal {
+    max-width: max-content;
+    padding: 10px 20px;
+}

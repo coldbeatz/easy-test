@@ -2,8 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -64,5 +68,23 @@ class Testing extends Model {
         } while (!$testing->isEmpty());
 
         $this->real_id = $id;
+    }
+
+    public function activatedTestings() {
+        return $this->hasMany(ActiveTest::class, 'testing_id')->orderBy('start_time', 'desc');
+    }
+
+    public function getActiveTestings() {
+        return $this->history()->where(function (Builder $query) {
+            return $query
+                ->whereNull('end_time')
+                ->orWhere('end_time', '>', Carbon::now());
+        })->get();
+    }
+
+    public function getArchivedTestings() {
+        return $this->history()
+            ->where('end_time', '<=', Carbon::now())
+            ->get();
     }
 }

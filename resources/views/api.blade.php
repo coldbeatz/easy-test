@@ -9,6 +9,8 @@
     <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
         <li class="tab"><a class="active" href="#user">user</a></li>
         <li class="tab"><a href="#testings">testings</a></li>
+        <li class="tab"><a href="#questions">questions</a></li>
+        <li class="tab"><a href="#activate">activate test</a></li>
     </ul>
 
     <div id="user">
@@ -414,11 +416,60 @@ empty
 
 
 
-
             <tr>
-                <td>app/testings/questions</td>
+                <td>app/testings/delete</td>
                 <td>Post</td>
                 <td>
+<pre>
+<code class="language-json">
+{
+    "id": 2
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-json">
+{
+    "message": "success"
+}
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+<div id="questions">
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>URI</th>
+            <th>Method</th>
+            <th>Input data</th>
+            <th>Output data</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td>app/testings/questions</td>
+            <td>Post</td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -426,9 +477,9 @@ empty
 }
 </code>
 </pre>
-                </td>
+            </td>
 
-                <td>
+            <td>
 <pre>
 <code class="language-json">
 [
@@ -452,21 +503,21 @@ empty
 ]
 </code>
 </pre>
-                    <pre>
+                <pre>
 <code class="language-json">
 {
     "error": "..."
 }
 </code>
 </pre>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
 
-            <tr>
-                <td>app/testings/getQuestion</td>
-                <td>Post</td>
-                <td>
+        <tr>
+            <td>app/testings/getQuestion</td>
+            <td>Post</td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -474,9 +525,9 @@ empty
 }
 </code>
 </pre>
-                </td>
+            </td>
 
-                <td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -496,20 +547,20 @@ empty
 }
 </code>
 </pre>
-                    <pre>
+                <pre>
 <code class="language-json">
 {
     "error": "..."
 }
 </code>
 </pre>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
-            <tr>
-                <td>app/testings/makeQuestion</td>
-                <td>Post</td>
-                <td>
+        <tr>
+            <td>app/testings/makeQuestion</td>
+            <td>Post</td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -532,9 +583,9 @@ empty
 }
 </code>
 </pre>
-                </td>
+            </td>
 
-                <td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -543,21 +594,21 @@ empty
 }
 </code>
 </pre>
-                    <pre>
+                <pre>
 <code class="language-json">
 {
     "error": "..."
 }
 </code>
 </pre>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
 
-            <tr>
-                <td>app/testings/updateQuestion</td>
-                <td>Post</td>
-                <td>
+        <tr>
+            <td>app/testings/updateQuestion</td>
+            <td>Post</td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -576,9 +627,9 @@ empty
 }
 </code>
 </pre>
-                </td>
+            </td>
 
-                <td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -586,22 +637,22 @@ empty
 }
 </code>
 </pre>
-                    <pre>
+                <pre>
 <code class="language-json">
 {
     "error": "..."
 }
 </code>
 </pre>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
 
 
-            <tr>
-                <td>app/testings/deleteQuestion</td>
-                <td>Post</td>
-                <td>
+        <tr>
+            <td>app/testings/deleteQuestion</td>
+            <td>Post</td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -609,9 +660,9 @@ empty
 }
 </code>
 </pre>
-                </td>
+            </td>
 
-                <td>
+            <td>
 <pre>
 <code class="language-json">
 {
@@ -619,23 +670,288 @@ empty
 }
 </code>
 </pre>
-                    <pre>
+                <pre>
 <code class="language-json">
 {
     "error": "..."
 }
 </code>
 </pre>
-                </td>
-            </tr>
+            </td>
+        </tr>
 
-
-
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>
 
+
+
+<div id="activate">
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>URI</th>
+            <th>Method</th>
+            <th>Input data</th>
+            <th>Output data</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td>app/testings/activate</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "datetime": "05/09/2023 12:00" or null,
+    "test_id": 1,
+    "title": "14 group",
+    "rating": 12,
+    "showUserAnswers": true,
+    "showCorrectAnswers": false
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+{
+    "testing_id": 1,
+    "user_id": 1,
+    "start_time": "2022-05-08 23:00",
+    "end_time": "2023-05-09 12:00",
+    "title": "14 group",
+    "max_rating": 12,
+    "access_code": "ywZuTSs",
+    "show_user_answers": true,
+    "show_correct_answers": false
+}
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>app/testings/getActivate</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "id": 6
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+{
+    "id": 6,
+    "testing_id": 2,
+    "user_id": 1,
+    "start_time": "2022-05-08 22:00",
+    "end_time": null,
+    "title": "gfdsgsdfgsdf",
+    "access_code": "BKdib8Lk9",
+    "show_user_answers": 0,
+    "show_correct_answers": 0,
+    "max_rating": 1
+}
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td>app/testings/allActivates</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "test_id": 1
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+[
+    {
+        "id": 3,
+        "testing_id": 1,
+        "user_id": 1,
+        "start_time": "2022-05-08 20:00",
+        "end_time": null,
+        "title": "543hfghf45",
+        "access_code": "qJhSWQiM",
+        "show_user_answers": 1,
+        "show_correct_answers": 1,
+        "max_rating": 44
+    },
+    ...
+]
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td>app/testings/updateActivate</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "id": 1,
+    "title": "24 group",
+    "rating": 22,
+    "showUserAnswers": true,
+    "showCorrectAnswers": true,
+    "datetime": null
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+{
+    "message": "success"
+}
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td>app/testings/deleteActivate</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "id": 6
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+{
+    "message": "success"
+}
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>app/testings/activateResults</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "activate_id": 3
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+[
+    {
+        "id": 1,
+        "hash": "wfsdfsd",
+        "activate_id": 3,
+        "user_id": 1,
+        "ip": "127.0.0.1",
+        "json_answers": ...,
+        "start_time": "2022-05-11 00:00",
+        "completion_time": "2022-05-11 01:00",
+        "rating": 6
+    },
+    ...
+]
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
+</div>
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>

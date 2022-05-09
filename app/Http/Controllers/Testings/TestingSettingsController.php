@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TestingMakeRequest;
 
 use App\Testing;
+
+use DateTimeImmutable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TestingSettingsController extends Controller {
@@ -30,5 +33,23 @@ class TestingSettingsController extends Controller {
         return back()
             ->withInput()
             ->with('success', 'Testing data updated');
+    }
+
+    public function onDelete(Request $request) {
+        $test = Testing::getByRealId($request->test);
+
+        foreach ($test->activatedTestings() as $active) {
+            $active->end_time = new DateTimeImmutable();
+
+            $active->update();
+            $active->delete();
+        }
+
+        $test->delete();
+
+        return redirect()
+                ->route('testings')
+                ->withInput()
+                ->with('success', 'Testing has been deleted');
     }
 }

@@ -1,7 +1,7 @@
 @push("styles")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
 @endpush
-@include('header', ['title' => 'Testings'])
+@include('header', ['title' => 'Testing Settings'])
 
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -19,13 +19,42 @@
     </div>
 </div>
 
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <h4>Warning</h4>
+        <p>Confirm you action to delete testing</p>
+    </div>
+    <div class="modal-footer">
+        <form method="post" action="{{ Request::url() }}/delete">
+            @csrf
+            <a class="modal-close waves-effect waves-red btn-flat">Disagree</a>
+            <button type="submit" class="modal-close waves-effect waves-green btn-flat">Agree</button>
+        </form>
+    </div>
+</div>
+
 <div class="container">
     @include('alerts')
 
     <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
         <li class="tab"><a class="active" href="#data">Information</a></li>
         <li class="tab"><a href="#testings">Questions</a></li>
+        <li class="tab"><a href="#active">Active</a></li>
     </ul>
+
+    <div id="active">
+        <div style="text-align: center;margin-top: 30px;">
+            <a href="{{ route('activate', ['test' => $test->real_id]) }}" class="waves-effect waves-light btn">Activate new</a>
+
+            <div class="collection">
+                @foreach ($test->activatedTestings as $active)
+                    <a href="{{ route('edit-activate', ['test' => $test->real_id, 'id' => $active->id]) }}" class="collection-item">{{ $active->title }}
+                        <span class="new badge {{ $active->isActive() ? "" : "red" }}" data-badge-caption="">{{ $active->getEndDateTime() }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
     <div id="testings">
         <div style="text-align: center;margin-top: 30px;">
@@ -64,8 +93,12 @@
 
     <div id="data" style="margin-top: 20px;">
         <form class="flex-column" method="POST" action="">
+            <a class="btn waves-effect waves-light red-button modal-trigger" href="#modal2">delete testing
+                <i class="material-icons right" style="font-size: 25px;">delete</i>
+            </a>
+
             @csrf
-            <div class="input-field" style="width: 100%;">
+            <div class="input-field" style="width: 100%;margin-top: 30px;">
                 <i class="material-icons prefix">settings</i>
                 <input id="title" type="text" class="validate" name="title" value="{{ $test->title }}">
                 <label for="title">Title</label>

@@ -29,11 +29,11 @@ class RegistrationController extends Controller {
             $name = $json['name'];
             $email = $json['email'];
             $password = $json['password'];
-            $captcha = $json['captcha'];
+            //$captcha = $json['captcha'];
 
-            if (!captcha_check($captcha)) {
-                return $this->jsonError('Captcha key invalid');
-            }
+            //if (!captcha_check($captcha)) {
+            //    return $this->jsonError('Captcha key invalid');
+            //}
 
             $user = new User();
 
@@ -44,7 +44,7 @@ class RegistrationController extends Controller {
 
             $verification = $this->createVerification($user->id);
 
-            $mail = new AccountActivateMail($name, route('activate', [
+            $mail = new AccountActivateMail($name, route('verification-mail', [
                 'userId' => $user->id,
                 'hash' => $verification->hash
             ]));
@@ -70,7 +70,7 @@ class RegistrationController extends Controller {
 
         $verification = $this->createVerification($user->id);
 
-        $mail = new AccountActivateMail($name, route('activate', [
+        $mail = new AccountActivateMail($name, route('verification-mail', [
             'userId' => $user->id,
             'hash' => $verification->hash
         ]));

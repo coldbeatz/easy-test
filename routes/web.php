@@ -9,6 +9,7 @@ use App\Http\Controllers\RestoreController;
 
 use App\Http\Controllers\SettingsController;
 
+use App\Http\Controllers\Testings\ActivateTestingController;
 use App\Http\Controllers\Testings\MakeTestingController;
 use App\Http\Controllers\Testings\QuestionController;
 use App\Http\Controllers\Testings\TestingsController;
@@ -19,6 +20,7 @@ use App\Mail\AccountActivateMail;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +73,7 @@ Route::prefix('restore')->group(function () {
     Route::post('/{hash}', [RestoreController::class, 'onChangePassword']);
 });
 
-Route::get('activate/{userId}/{hash}', [LoginController::class, 'onActivateAccount'])->name('activate');
+Route::get('verification-mail/{userId}/{hash}', [LoginController::class, 'onActivateAccount'])->name('verification-mail');
 Route::get('refresh-captcha', [CaptchaController::class, 'refreshCaptcha'])->name('refreshCaptcha');
 
 Route::middleware('auth')->group(function() {
@@ -90,6 +92,10 @@ Route::middleware('auth')->group(function() {
             ->name('setPassword');
     });
 
+    Route::get('result/{hash}', function ($hash) {
+        return $hash;
+    })->name('result');
+
     Route::prefix('testings')->group(function () {
         Route::get('/', [TestingsController::class, 'index'])
             ->name('testings');
@@ -99,22 +105,41 @@ Route::middleware('auth')->group(function() {
 
         Route::post('create', [MakeTestingController::class, 'create']);
 
-        Route::get('/{test}', [TestingSettingsController::class, 'index'])
-            ->name('testing');
+        Route::prefix('/{test}')->group(function () {
+            Route::get('/', [TestingSettingsController::class, 'index'])
+                ->name('testing');
+
+            Route::post('/', [TestingSettingsController::class, 'update']);
+
+            Route::post('question', [QuestionController::class, 'onCreateQuestion']);
+            Route::post('question/{id}', [QuestionController::class, 'onUpdateQuestion']);
+
+            Route::get('question', [QuestionController::class, 'index'])
+                ->name('make-question');
+
+            Route::get('question/{id}', [QuestionController::class, 'index'])
+                ->name('edit-question');
+
+            Route::post('delete', [TestingSettingsController::class, 'onDelete']);
+
+            Route::get('activate', [ActivateTestingController::class, 'index'])
+                ->name('activate');
+
+            Route::get('activate/{id}', [ActivateTestingController::class, 'index'])
+                ->name('edit-activate');
+
+            Route::post('activate', [ActivateTestingController::class, 'onActivate']);
+
+            Route::prefix('activate/{id}')->group(function() {
+                Route::post('/', [ActivateTestingController::class, 'onEditActivate']);
+                Route::get('chart', [ActivateTestingController::class, 'ratingsChart']);
+                Route::get('results', [ActivateTestingController::class, 'userResultsHTML']);
+                Route::post('delete', [ActivateTestingController::class, 'onDeleteActivate']);
+            });
+        });
 
         Route::post('delete-question', [QuestionController::class, 'onRemoveQuestion'])
             ->name('delete-question');
-
-        Route::post('/{test}', [TestingSettingsController::class, 'update']);
-
-        Route::post('{test}/question', [QuestionController::class, 'onCreateQuestion']);
-        Route::post('{test}/question/{id}', [QuestionController::class, 'onUpdateQuestion']);
-
-        Route::get('{test}/question', [QuestionController::class, 'index'])
-            ->name('make-question');
-
-        Route::get('{test}/question/{id}', [QuestionController::class, 'index'])
-            ->name('edit-question');
     });
 
     Route::post('upload_image', [AvatarUploadController::class, 'upload']);
@@ -139,21 +164,28 @@ Route::middleware('auth')->group(function() {
             Route::post('new', [ApiTestingsController::class, 'onMakeTesting']);
             Route::post('get', [ApiTestingsController::class, 'getTestingById']);
             Route::post('update', [ApiTestingsController::class, 'onUpdateTesting']);
+            Route::post('delete', [ApiTestingsController::class, 'onDeleteTesting']);
+
             Route::post('questions', [ApiTestingsController::class, 'getTestingQuestions']);
             Route::post('getQuestion', [ApiTestingsController::class, 'getQuestionById']);
             Route::post('makeQuestion', [ApiTestingsController::class, 'onMakeQuestion']);
             Route::post('updateQuestion', [ApiTestingsController::class, 'onUpdateQuestion']);
             Route::post('deleteQuestion', [ApiTestingsController::class, 'onDeleteQuestion']);
 
-            // activate test, removes, statistic
-            // test (+ connect)
+            Route::post('activate', [ApiTestingsController::class, 'onActivateTesting']);
+            Route::post('getActivate', [ApiTestingsController::class, 'getActivate']);
+            Route::post('allActivates', [ApiTestingsController::class, 'allActivates']);
+            Route::post('updateActivate', [ApiTestingsController::class, 'onEditActivate']);
+            Route::post('deleteActivate', [ApiTestingsController::class, 'onDeleteActivate']);
+            Route::post('activateResults', [ApiTestingsController::class, 'getResults']);
+            // test (+ connect (QR link, link))
             // results
         });
     });
 });
 
 /*Route::get('tests', function () {
-    $mail = new AccountActivateMail("vbitmar@mail.ru", route('activate', [
+    $mail = new AccountActivateMail("vbitmar@mail.ru", route('verification-mail', [
         'userId' => '$user->id',
         'hash' => '$verification->hash'
     ]));

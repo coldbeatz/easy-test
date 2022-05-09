@@ -135,6 +135,8 @@ return [
     */
 
     'providers' => [
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        //LaravelQRCode\Providers\QRCodeServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -191,6 +193,8 @@ return [
     */
 
     'aliases' => [
+        //'QRCode' => LaravelQRCode\Facades\QRCode::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
