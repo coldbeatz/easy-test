@@ -7,8 +7,10 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
 
 use App\Question;
+use App\Result;
 use App\Testing;
 
+use Carbon\Carbon;
 use DateTimeImmutable;
 use Exception;
 
@@ -371,7 +373,7 @@ class ApiTestingsController extends Controller {
         }
     }
 
-    public function getResults(Request $request):JsonResponse {
+    public function getActivateResults(Request $request):JsonResponse {
         try {
             $json = $request->json()->all();
 
@@ -381,7 +383,139 @@ class ApiTestingsController extends Controller {
             if ($active->testing->creator_id != Auth::id())
                 return $this->jsonError("User is not test creator");
 
-            return response()->json($active->results()->jsonSerialize());
+            $results = $active->results()->toArray();
+            foreach ($results as $key => $result) {
+                $results[$key]['json_answers'] = json_decode($result['json_answers']);
+            }
+
+            return response()->json($results);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getResult(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['result_id'];
+
+            $result = Result::find($id);
+
+            $creatorId = $result->activateTesting->testing->creator_id;
+            $userId = Auth::id();
+
+            if ($creatorId != $userId || $result->user_id != $userId)
+                return $this->jsonError("User access forbidden");
+
+            $result = $result->toArray();
+            $result['json_answers'] = json_decode($result['json_answers']);
+
+            return response()->json($result);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getResults(Request $request):JsonResponse {
+        try {
+            $results = Result::where('user_id', Auth::id())
+                ->get()
+                ->toArray();
+
+            foreach ($results as $key => $result) {
+                $results[$key]['json_answers'] = json_decode($result['json_answers']);
+            }
+
+            return response()->json($results);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function onTestConnection(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $code = $json['code'];
+
+            $active = ActiveTest::where('access_code', $code)->first();
+            if ($active == null) {
+                return $this->jsonError('Active test not fond');
+            }
+
+            $time = $active->end_time;
+            if ($time != null && Carbon::now() > $time) {
+                return $this->jsonError("Time expired from $time");
+            }
+
+            $result = Result::create($request->user(), $active, $request->ip());
+            $result->save();
+
+            $array = $result->toArray();
+            $array['json_answers'] = json_decode($array['json_answers']);
+
+            unset($array['activate_testing']);
+
+            return response()->json($array);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function updateTestProgress(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['result_id'];
+            $jsonAnswers = $json['json_answers'];
+
+            $result = Result::find($id);
+
+            if ($result == null)
+                return $this->jsonError("Unknown result: $id");
+
+            if ($result->isCompleted())
+                return $this->jsonError("Test has been completed");
+
+            if ($result->user_id == Auth::user()->id) {
+                $result->json_answers = json_encode($jsonAnswers);
+                $result->update();
+            }
+
+            return $this->jsonMessage('success');
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function onTestComplete(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['result_id'];
+            $jsonAnswers = $json['json_answers'];
+
+            $result = Result::find($id);
+
+            if ($result == null)
+                return $this->jsonError("Unknown result: $id");
+
+            if ($result->isCompleted())
+                return $this->jsonError("Test has been completed");
+
+            if ($result->user_id == Auth::user()->id) {
+                $result->json_answers = json_encode($jsonAnswers);
+                $result->completion_time = Carbon::now();
+
+                $result->updateRating();
+                $result->update();
+            }
+
+            $array = $result->toArray();
+            $array['json_answers'] = json_decode($array['json_answers']);
+
+            return response()->json($array);
         } catch (Exception $e) {
             return $this->jsonError($e->getMessage());
         }

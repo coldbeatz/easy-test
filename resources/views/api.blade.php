@@ -6,11 +6,12 @@
 @include('header', ['title' => 'API'])
 
 <div class="container">
-    <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
+    <ul class="tabs tabs-fixed-width tab-demo z-depth-1" style="margin-bottom: 20px;">
         <li class="tab"><a class="active" href="#user">user</a></li>
         <li class="tab"><a href="#testings">testings</a></li>
         <li class="tab"><a href="#questions">questions</a></li>
         <li class="tab"><a href="#activate">activate test</a></li>
+        <li class="tab"><a href="#passing">test passing</a></li>
     </ul>
 
     <div id="user">
@@ -928,7 +929,35 @@ empty
         "activate_id": 3,
         "user_id": 1,
         "ip": "127.0.0.1",
-        "json_answers": ...,
+        "json_answers": [
+            {
+                "id": 1 (question id),
+                "answers": [
+                    {
+                        "id": 1 (question->json_answers[id]),
+                        "checked": true
+                    },
+                    {
+                        "id": 0,
+                        "checked": false
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "answers": [
+                    {
+                        "id": 0,
+                        "checked": true
+                    },
+                    {
+                        "id": 1,
+                        "checked": false
+                    }
+                ]
+            },
+            ...
+        ],
         "start_time": "2022-05-11 00:00",
         "completion_time": "2022-05-11 01:00",
         "rating": 6
@@ -948,9 +977,431 @@ empty
         </tr>
 
 
+
+
+        <tr>
+            <td>app/result</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-json">
+{
+    "result_id": 3
+}
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+{
+    "id": 3,
+    "hash": "C044yHr5N9OZFJFb",
+    "activate_id": 3,
+    "user_id": 1,
+    "ip": "127.0.0.1",
+    "json_answers": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "checked": true
+                },
+                {
+                    "id": 0,
+                    "checked": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 0,
+                    "checked": true
+                },
+                {
+                    "id": 1,
+                    "checked": false
+                }
+            ]
+        },
+        ...
+    ],
+    "start_time": "2022-05-10 22:00",
+    "completion_time": "2022-05-10 22:00",
+    "rating": 22,
+    "activate_testing": {
+        "id": 3,
+        "testing_id": 1,
+        "user_id": 1,
+        "start_time": "2022-05-08 20:00",
+        "end_time": null,
+        "title": "543hfghf45",
+        "access_code": "qJhSWQiM",
+        "show_user_answers": 1,
+        "show_correct_answers": 1,
+        "max_rating": 44,
+        "testing": {
+            "id": 1,
+            "title": "fghdfghdfghdfg",
+            "description": "dfghdfh",
+            "created_at": "2022-05-08 09:00",
+            "updated_at": "2022-05-08 09:00"
+        }
+    }
+}
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>app/results</td>
+            <td>Post</td>
+            <td>
+<pre>
+<code class="language-html">
+empty
+</code>
+</pre>
+            </td>
+
+            <td>
+<pre>
+<code class="language-json">
+[
+    {
+        "id": 1,
+        "hash": "wfsdfsd",
+        "activate_id": 3,
+        "user_id": 1,
+        "ip": "127.0.0.1",
+        "json_answers": [
+            {
+                "id": 1,
+                "answers": [
+                    {
+                        "id": 1,
+                        "checked": true
+                    },
+                    {
+                        "id": 0,
+                        "checked": false
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "answers": [
+                    {
+                        "id": 0,
+                        "checked": true
+                    },
+                    {
+                        "id": 1,
+                        "checked": false
+                    }
+                ]
+            }
+        ],
+        "start_time": "2022-05-11 00:00",
+        "completion_time": "2022-05-11 01:00",
+        "rating": 6
+    },
+    ... (all user results)
+]
+</code>
+</pre>
+                <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+            </td>
+        </tr>
+
         </tbody>
     </table>
 </div>
+
+
+
+
+
+
+    <div id="passing">
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>URI</th>
+                <th>Method</th>
+                <th>Input data</th>
+                <th>Output data</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>app/test/connect</td>
+                <td>Post</td>
+                <td>
+<pre>
+<code class="language-json">
+
+{
+    "code": "qJhSWQiM"
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-json">
+{
+    "hash": "QdIFFk5UfA5uH0Ab",
+    "activate_id": 3,
+    "user_id": 1,
+    "ip": "127.0.0.1",
+    "start_time": "2022-05-11 21:00",
+    "json_answers": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "checked": false
+                },
+                {
+                    "id": 0,
+                    "checked": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 0,
+                    "checked": false
+                },
+                {
+                    "id": 1,
+                    "checked": false
+                }
+            ]
+        }
+    ],
+    "id": 9
+}
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td>app/test/updateJsonProgress</td>
+                <td>Post</td>
+                <td>
+<pre>
+<code class="language-json">
+{
+    "result_id": 9,
+    "json_answers": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "checked": true
+                },
+                {
+                    "id": 0,
+                    "checked": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 0,
+                    "checked": true
+                },
+                {
+                    "id": 1,
+                    "checked": false
+                }
+            ]
+        },
+        .. (all questions answers)
+    ]
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-json">
+{
+    "message": "success"
+}
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td>app/test/complete</td>
+                <td>Post</td>
+                <td>
+<pre>
+<code class="language-json">
+{
+    "result_id": 9,
+    "json_answers": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "checked": true
+                },
+                {
+                    "id": 0,
+                    "checked": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 0,
+                    "checked": true
+                },
+                {
+                    "id": 1,
+                    "checked": false
+                }
+            ]
+        },
+        ... (all questions answers)
+    ]
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-json">
+{
+    "id": 9,
+    "hash": "QdIFFk5UfA5uH0Ab",
+    "activate_id": 3,
+    "user_id": 1,
+    "ip": "127.0.0.1",
+    "json_answers": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "checked": true
+                },
+                {
+                    "id": 0,
+                    "checked": false
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 0,
+                    "checked": true
+                },
+                {
+                    "id": 1,
+                    "checked": false
+                }
+            ]
+        }
+    ],
+    "start_time": "2022-05-11 21:00",
+    "completion_time": "2022-05-11 21:00",
+    "rating": 22,
+    "activate_testing": {
+        "id": 3,
+        "testing_id": 1,
+        "user_id": 1,
+        "start_time": "2022-05-08 20:00",
+        "end_time": null,
+        "title": "543hfghf45",
+        "access_code": "qJhSWQiM",
+        "show_user_answers": 1,
+        "show_correct_answers": 1,
+        "max_rating": 44
+    }
+}
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
 </div>
 
 @push('scripts')

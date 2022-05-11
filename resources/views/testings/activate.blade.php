@@ -34,7 +34,8 @@
                 <input id="code" type="text" value="{{ $active->access_code }}" readonly>
                 <label for="code">Access code</label>
             </div>
-            <img style="margin-top: 10px;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate("todo route")) !!} ">
+            <a href="{{ URL::to('/testings?test=' . $active->access_code) }}">{{ URL::to('/testings?test=' . $active->access_code) }}</a>
+            <img style="margin-top: 10px;" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(150)->generate(URL::to('/testings?test=' . $active->access_code))) !!} ">
         </div>
     </div>
 

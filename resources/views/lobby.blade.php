@@ -3,8 +3,8 @@
 @endpush
 @include('header', ['title' => 'Settings'])
 
-<div class="container">
-
+<div class="container" style="text-align: center">
+    <p>{{ config('app.name') }} - 2022</p>
 </div>
 
 @include('footer')

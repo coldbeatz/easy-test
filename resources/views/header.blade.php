@@ -2,10 +2,12 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="{{ URL::asset("css/left-nav-style.css") }}">
     <link rel="stylesheet" href="{{ URL::asset("css/shared.css") }}">
+
+    <link rel="icon" type="image/x-icon" href="{{ URL::asset("favicon.ico") }}">
 
     @stack('styles')
 
@@ -26,6 +28,7 @@
 
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ route('testings') }}">Testings</a></li>
+            <li><a href="{{ route('results') }}">Results</a></li>
             <li><a href="{{ route('settings') }}">Settings</a></li>
             <li><a href="{{ route('logout') }}">Logout</a></li>
         </ul>
@@ -45,14 +48,11 @@
     <li>
         <a href="/"><i class="material-icons">home</i>Main</a>
     </li>
-    <!--<li>
-        <a class="subheader"><i class="material-icons">computer</i>Classes</a>
-    </li>-->
     <li>
         <a href="{{ route('testings') }}"><i class="material-icons">check</i>Testings</a>
     </li>
     <li>
-        <a class="subheader"><i class="material-icons">folder_shared</i>Results</a>
+        <a href="{{ route('results') }}"><i class="material-icons">folder_shared</i>Results</a>
     </li>
     <li>
         <div class="divider"></div>

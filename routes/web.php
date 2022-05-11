@@ -7,8 +7,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RestoreController;
 
+use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\SettingsController;
 
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Testings\ActivateTestingController;
 use App\Http\Controllers\Testings\MakeTestingController;
 use App\Http\Controllers\Testings\QuestionController;
@@ -54,6 +56,12 @@ Route::get('migrate', function () {
 });
 
 Route::middleware('guest')->group(function() {
+    Route::get('app_auth', function () {
+        return response()->json([
+            'error' => 'user not auth'
+        ]);
+    })->name('app_auth');
+
     Route::prefix('login')->group(function () {
         Route::get('/', [LoginController::class, 'index'])->name('login');
         Route::post('auth', [LoginController::class, 'onLogin'])->name('auth');
@@ -92,13 +100,12 @@ Route::middleware('auth')->group(function() {
             ->name('setPassword');
     });
 
-    Route::get('result/{hash}', function ($hash) {
-        return $hash;
-    })->name('result');
-
     Route::prefix('testings')->group(function () {
         Route::get('/', [TestingsController::class, 'index'])
             ->name('testings');
+
+        Route::post('connect', [TestController::class, 'onConnected'])
+            ->name('connect');
 
         Route::get('new', [MakeTestingController::class, 'index'])
             ->name('make-test');
@@ -149,6 +156,14 @@ Route::middleware('auth')->group(function() {
         return view('api');
     });
 
+    Route::get('test/{hash}', [TestController::class, 'index'])
+        ->name('test');
+
+    Route::post('test/{hash}', [TestController::class, 'update']);
+
+    Route::get('results', [ResultsController::class, 'index'])
+        ->name('results');
+
     /**
      * Rest api
      */
@@ -177,10 +192,17 @@ Route::middleware('auth')->group(function() {
             Route::post('allActivates', [ApiTestingsController::class, 'allActivates']);
             Route::post('updateActivate', [ApiTestingsController::class, 'onEditActivate']);
             Route::post('deleteActivate', [ApiTestingsController::class, 'onDeleteActivate']);
-            Route::post('activateResults', [ApiTestingsController::class, 'getResults']);
-            // test (+ connect (QR link, link))
-            // results
+            Route::post('activateResults', [ApiTestingsController::class, 'getActivateResults']);
         });
+
+        Route::prefix('test')->group(function () {
+            Route::post('connect', [ApiTestingsController::class, 'onTestConnection']);
+            Route::post('updateJsonProgress', [ApiTestingsController::class, 'updateTestProgress']);
+            Route::post('complete', [ApiTestingsController::class, 'onTestComplete']);
+        });
+
+        Route::post('result', [ApiTestingsController::class, 'getResult']);
+        Route::post('results', [ApiTestingsController::class, 'getResults']);
     });
 });
 

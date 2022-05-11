@@ -136,6 +136,7 @@ img {
     margin: 20px 0;
     background-color: #fbfbfb;
     background-image: linear-gradient(to bottom, #ffffff 60%, #f6f6f6 100%);
+    width: 100%;
 }
 
 .result {
@@ -162,4 +163,81 @@ img {
 #modal {
     max-width: max-content;
     padding: 10px 20px;
+}
+
+.result-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.progress {
+    height: 25px;
+    width: 100%;
+    background-color: #BBDEFB !important;
+    border-radius: 20px;
+}
+
+.progress-line {
+    height: 100%;
+    background-color: #2196F3 !important;
+    width: 50.0%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-left: 10px;
+    padding-right: 7px;
+    min-width: 10%;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.result-image {
+    display: flex;
+    align-items: center;
+}
+
+.result-image img {
+    max-width: 40px;
+    margin-right: 15px;
+}
+
+.question-red {
+    background-image: linear-gradient(to bottom, #ffffff 50%, rgba(227, 38, 54, 0.08) 100%);
+}
+
+[type="radio"].with-gap:checked+span.incorrect:after {
+    background-color: #ff9800;
+    border-color: #ff9800;
+}
+
+[type="radio"].with-gap:checked + span.incorrect:before {
+    border: 2px solid #ff9800;
+}
+
+[type="radio"].with-gap:checked + span.missing:after {
+    background-color: #4CBB17;
+    border-color: #4CBB17;
+}
+
+[type="radio"].with-gap:checked + span.missing:before {
+    border: 2px solid #4CBB17;
+}
+
+.pagination li.active {
+    background-color: #26a69a;
+}
+
+.pagination {
+    text-align: center;
 }

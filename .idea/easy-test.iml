@@ -122,5 +122,6 @@
     <orderEntry type="library" name="default" level="application" />
     <orderEntry type="library" name="highlight" level="application" />
     <orderEntry type="library" name="highlight.js" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>
