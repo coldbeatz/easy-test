@@ -1,4 +1,6 @@
 # easy-test
 
-http://easy-test.site/
-https://github.com/coldbeatz/easy-test/tree/master
+Site: http://easy-test.site/
+
+
+Source: https://github.com/coldbeatz/easy-test/tree/master
