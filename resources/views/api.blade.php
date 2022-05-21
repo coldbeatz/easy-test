@@ -1395,6 +1395,64 @@ empty
 
 
 
+            <tr>
+                <td>app/test/getResultById</td>
+                <td>Post</td>
+                <td>
+<pre>
+<code class="language-json">
+{
+    "result_id": 9
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-html">
+result json
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+
+            <tr>
+                <td>app/test/getResultByHash</td>
+                <td>Post</td>
+                <td>
+<pre>
+<code class="language-json">
+{
+    "result_hash": "qJhSWQiM"
+}
+</code>
+</pre>
+                </td>
+
+                <td>
+<pre>
+<code class="language-html">
+result json
+</code>
+</pre>
+                    <pre>
+<code class="language-json">
+{
+    "error": "..."
+}
+</code>
+</pre>
+                </td>
+            </tr>
+
             </tbody>
         </table>
     </div>

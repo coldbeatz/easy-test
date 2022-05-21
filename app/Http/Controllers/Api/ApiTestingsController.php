@@ -74,8 +74,8 @@ class ApiTestingsController extends Controller {
             if (empty($test))
                 return $this->jsonError("Test is not exists");
 
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //   return $this->jsonError("User is not test creator");
 
             foreach ($test->activatedTestings() as $active) {
                 $active->end_time = new DateTimeImmutable();
@@ -104,8 +104,8 @@ class ApiTestingsController extends Controller {
             if (empty($test))
                 return $this->jsonError("Test is not exists");
 
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $test->title = $title;
             $test->description = $description;
@@ -128,8 +128,8 @@ class ApiTestingsController extends Controller {
             if (empty($test))
                 return $this->jsonError("Test is not exists");
 
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $questions = $test->questions->toArray();
             foreach ($questions as $key => $question) {
@@ -152,8 +152,8 @@ class ApiTestingsController extends Controller {
             if (empty($question))
                 return $this->jsonError("Question is not exists");
 
-            if ($question->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($question->testing->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $array = $question->toArray();
             $array['json_answers'] = json_decode($array['json_answers']);
@@ -174,8 +174,8 @@ class ApiTestingsController extends Controller {
 
             $test = Testing::find($id);
 
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $question = new Question();
             $question->setData($text, $json, $test->id);
@@ -203,8 +203,8 @@ class ApiTestingsController extends Controller {
             if ($question == null)
                 return $this->jsonError("Question not found");
 
-            if ($question->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($question->testing->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $question->setData($text, $json, $question->testing_id);
             $question->update();
@@ -225,8 +225,8 @@ class ApiTestingsController extends Controller {
             if ($question == null)
                 return $this->jsonError("Question not found");
 
-            if ($question->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($question->testing->creator_id != Auth::id())
+            //   return $this->jsonError("User is not test creator");
 
             $question->delete();
 
@@ -254,8 +254,8 @@ class ApiTestingsController extends Controller {
             if ($test == null)
                 return $this->jsonError("Test not found");
 
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $active = new ActiveTest();
 
@@ -295,8 +295,8 @@ class ApiTestingsController extends Controller {
             $dateTo = $datetime == null ? null : DateTimeImmutable::createFromFormat('m/d/Y H:i', $datetime);
 
             $active = ActiveTest::find($id);
-            if ($active->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($active->testing->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $active->end_time = $dateTo;
 
@@ -321,8 +321,8 @@ class ApiTestingsController extends Controller {
             $id = $json['id'];
 
             $active = ActiveTest::find($id);
-            if ($active->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($active->testing->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             return response()->json($active->jsonSerialize());
         } catch (Exception $e) {
@@ -337,8 +337,8 @@ class ApiTestingsController extends Controller {
             $id = $json['test_id'];
 
             $test = Testing::find($id);
-            if ($test->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($test->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $all = [];
 
@@ -359,8 +359,8 @@ class ApiTestingsController extends Controller {
             $id = $json['id'];
 
             $active = ActiveTest::find($id);
-            if ($active->testing->creator_id != Auth::id())
-                return $this->jsonError("User is not test creator");
+            //if ($active->testing->creator_id != Auth::id())
+            //    return $this->jsonError("User is not test creator");
 
             $active->end_time = new DateTimeImmutable();
 
@@ -511,6 +511,44 @@ class ApiTestingsController extends Controller {
                 $result->updateRating();
                 $result->update();
             }
+
+            $array = $result->toArray();
+            $array['json_answers'] = json_decode($array['json_answers']);
+
+            return response()->json($array);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getResultById(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $id = $json['result_id'];
+            $result = Result::find($id);
+
+            if ($result == null)
+                return $this->jsonError("Unknown result: $id");
+
+            $array = $result->toArray();
+            $array['json_answers'] = json_decode($array['json_answers']);
+
+            return response()->json($array);
+        } catch (Exception $e) {
+            return $this->jsonError($e->getMessage());
+        }
+    }
+
+    public function getResultByHash(Request $request):JsonResponse {
+        try {
+            $json = $request->json()->all();
+
+            $hash = $json['result_hash'];
+            $result = Result::where('hash', $hash)->first();
+
+            if ($result == null)
+                return $this->jsonError("Unknown result: $hash");
 
             $array = $result->toArray();
             $array['json_answers'] = json_decode($array['json_answers']);

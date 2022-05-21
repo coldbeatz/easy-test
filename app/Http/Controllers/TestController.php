@@ -21,11 +21,11 @@ class TestController extends Controller {
             return $this->redirectFail('Unknown result: ' . $hash);
         }
 
-        $userId = $result->user_id;
-        $creatorId = Auth::user()->id;
+        $resultUserId = $result->user_id;
+        $currentUserId = Auth::id();
 
         if (!$result->isCompleted()) {
-            if ($userId != $creatorId) {
+            if ($resultUserId !== $currentUserId) {
                 return $this->redirectFail('Auth user access denied');
             }
 
@@ -36,18 +36,20 @@ class TestController extends Controller {
 
         $active = $result->activateTesting;
 
-        if ($userId != $creatorId || $active->user_id != $creatorId) {
-            return $this->redirectFail('Auth user access denied');
+        $activeUserId = $active->user_id;
+
+        if ($resultUserId === $currentUserId || $activeUserId === $currentUserId) {
+            return view("testings/test/result", [
+                'result' => $result,
+                'user' => $result->user,
+                'active' => $active,
+                'testing' => $active->testing,
+                'questionsData' => $result->getResultQuestions(),
+                'isCreator' => $activeUserId === $currentUserId
+            ]);
         }
 
-        return view("testings/test/result", [
-            'result' => $result,
-            'user' => $result->user,
-            'active' => $active,
-            'testing' => $active->testing,
-            'questionsData' => $result->getResultQuestions(),
-            'isCreator' => $active->user_id != $creatorId
-        ]);
+        return $this->redirectFail('Auth user access denied: ' . $resultUserId . '-' . $currentUserId . '-' . $activeUserId);
     }
 
     private function redirectFail(string $text):RedirectResponse {

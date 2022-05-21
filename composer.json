@@ -21,6 +21,7 @@
         "werneckbh/laravel-qr-code": "^0.1.3"
     },
     "require-dev": {
+        "andyabih/laravel-to-uml": "^1.0",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",

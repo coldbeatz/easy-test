@@ -1,5 +1,6 @@
 <?php
 
+use Andyabih\LaravelToUML\Http\Controllers\LaravelToUMLController;
 use App\Http\Controllers\Api\ApiTestingsController;
 use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\CaptchaController;
@@ -203,6 +204,8 @@ Route::middleware('auth')->group(function() {
 
         Route::post('result', [ApiTestingsController::class, 'getResult']);
         Route::post('results', [ApiTestingsController::class, 'getResults']);
+        Route::post('getResultById', [ApiTestingsController::class, 'getResultById']);
+        Route::post('getResultByHash', [ApiTestingsController::class, 'getResultByHash']);
     });
 });
 
