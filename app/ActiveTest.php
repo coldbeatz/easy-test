@@ -26,8 +26,8 @@ class ActiveTest extends Model {
     ];
 
     protected $casts = [
-        'start_time' => 'datetime:Y-m-d H:00',
-        'end_time' => 'datetime:Y-m-d H:00'
+        'start_time' => 'datetime:Y-m-d H:i:s',
+        'end_time' => 'datetime:Y-m-d H:i:s'
     ];
 
     public $timestamps = false;

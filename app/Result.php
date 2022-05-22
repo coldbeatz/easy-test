@@ -14,8 +14,8 @@ class Result extends Model {
     public $timestamps = false;
 
     protected $casts = [
-        'start_time' => 'datetime:Y-m-d H:00',
-        'completion_time' => 'datetime:Y-m-d H:00'
+        'start_time' => 'datetime:Y-m-d H:i:s',
+        'completion_time' => 'datetime:Y-m-d H:i:s'
     ];
 
     public function user() {

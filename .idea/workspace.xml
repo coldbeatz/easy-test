@@ -19,18 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0ffb87e-2384-4e22-a64d-7671e59a315c" name="Default Changelist" comment="test passing + results, api">
-      <change beforePath="$PROJECT_DIR$/.idea/easy-test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/easy-test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="f0ffb87e-2384-4e22-a64d-7671e59a315c" name="Default Changelist" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiTestingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiTestingsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/api.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/api.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ActiveTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ActiveTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Result.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Result.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Testing.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Testing.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +242,8 @@
       <workItem from="1652683488874" duration="54000" />
       <workItem from="1652696575115" duration="785000" />
       <workItem from="1652811605024" duration="38000" />
-      <workItem from="1653122032717" duration="1606000" />
+      <workItem from="1653122032717" duration="1838000" />
+      <workItem from="1653205537842" duration="824000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1647936525354</created>
@@ -314,7 +308,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652305104608</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fixes">
+      <created>1653123865619</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1653123865619</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +342,8 @@
     <MESSAGE value="settings, testings api" />
     <MESSAGE value="activate tests + api" />
     <MESSAGE value="test passing + results, api" />
-    <option name="LAST_COMMIT_MESSAGE" value="test passing + results, api" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="696" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1649014698509">
@@ -377,10 +379,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1647937814748" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1652305112442">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1653123870358">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1652305112442" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1653123870358" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1648236774019" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1651613581370">
       <screen x="0" y="0" width="1920" height="1040" />
