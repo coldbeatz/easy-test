@@ -51,6 +51,8 @@ class UserRestController extends Controller {
 
             if (Hash::check($currentPassword, $user->password)) {
                 $user->setPassword($newPassword);
+                $user->save();
+
                 return $this->jsonMessage('success');
             }
 

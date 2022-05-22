@@ -34,6 +34,7 @@ class SettingsController extends Controller {
 
         if (Hash::check($currentPassword, $user->password)) {
             $user->setPassword($newPassword);
+            $user->save();
 
             return back()
                 ->withInput()
