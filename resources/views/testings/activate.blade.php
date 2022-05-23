@@ -22,7 +22,7 @@
 
     @isset($active)
     <ul class="tabs tabs-fixed-width tab-demo z-depth-1" style="margin-bottom: 20px" id="tabs">
-        <li class="tab"><a class="change" href="#change">Change data</a></li>
+        <li class="tab"><a class="change active" href="#change">Change data</a></li>
         <li class="tab"><a href="#connection">Connection data</a></li>
         <li class="tab"><a href="#statistic">Statistic</a></li>
     </ul>
