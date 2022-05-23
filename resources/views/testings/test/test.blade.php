@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form class="flex-column" method="POST" action="" id="form">
+    <form class="flex-column" method="POST" action="" id="form" style="padding-bottom: 30px;">
         @csrf
         <input type="hidden" name="hidden" id="hidden">
         @foreach ($result->getResultQuestions()->getQuestions() as $key => $question)

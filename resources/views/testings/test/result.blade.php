@@ -28,7 +28,7 @@
         <div class="card-action">
             <div class="center">
                 <b class="mx-1">{{ $result->rating }} / {{ $active->max_rating }}</b>
-                <span class="mx-1"> балів</span>
+                <span class="mx-1"> scores</span>
             </div>
             <div>
                 <div class="progress">
