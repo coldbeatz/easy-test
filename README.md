@@ -1,4 +1,4 @@
-# easy-test
+# EasyTest
 
 Site: http://easy-test.site/
 
